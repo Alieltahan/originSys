@@ -44,26 +44,31 @@ const TableComponent = ({ rowId, handleRowChange }) => {
 				field: 'id',
 				headerName: 'ID',
 				width: 70,
+				flex: 1,
 			},
 			{
 				field: 'first_name',
 				headerName: 'First Name',
 				width: 130,
+				flex: 1,
 			},
 			{
 				field: 'last_name',
 				headerName: 'Last Name',
 				width: 130,
+				flex: 1,
 			},
 			{
 				field: 'city',
 				headerName: 'City',
 				width: 160,
+				flex: 1,
 			},
 			{
 				field: 'age',
 				headerName: 'Age',
 				width: 130,
+				flex: 1,
 				renderCell: (params) => calculateAge(params.row.age),
 			},
 			{
@@ -72,11 +77,13 @@ const TableComponent = ({ rowId, handleRowChange }) => {
 				width: 210,
 				sortable: false,
 				filterable: false,
+				flex: 1,
 			},
 			{
 				field: 'plan',
 				headerName: 'Plan',
 				width: 100,
+				flex: 1,
 				type: 'singleSelect',
 				valueOptions: [
 					'Essential',
@@ -101,11 +108,13 @@ const TableComponent = ({ rowId, handleRowChange }) => {
 				type: 'singleSelect',
 				valueOptions: ['Active', 'Idle', 'Pending', 'Blocked'],
 				editable: true,
+				flex: 1,
 			},
 			{
 				field: 'actions',
 				headerName: 'Save',
 				type: 'actions',
+				flex: 1,
 				renderCell: (params) => (
 					<SaveTableData {...{ params, rowId }} />
 				),
@@ -135,7 +144,6 @@ const TableComponent = ({ rowId, handleRowChange }) => {
 			/>
 		);
 	};
-
 	const renderExportButton = () => {
 		return (
 			<Button
@@ -154,7 +162,7 @@ const TableComponent = ({ rowId, handleRowChange }) => {
 		<div
 			style={{
 				height: 400,
-				width: '90%',
+				width: '80%',
 				display: 'flex',
 				flexDirection: 'column',
 				margin: 'auto',
