@@ -12,7 +12,6 @@ const SaveTableDataComponent = ({ params, rowId }) => {
 	const handleSave = () => {
 		setLoading(true);
 		setTimeout(() => {
-			console.log(params);
 			const { id, plan, plan_status } = params.row;
 			handleDataUpdate(id, plan, plan_status);
 			setSucess(true);
