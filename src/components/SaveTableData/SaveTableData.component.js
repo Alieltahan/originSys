@@ -4,11 +4,17 @@ import { green } from '@mui/material/colors';
 import { useContext, useState } from 'react';
 import { DataContext } from '../../hooks/Context/DataContext';
 
+/**
+ * @param {Object} params Object of editting row.
+ * @param {Number} rowId
+ * @returns
+ */
 const SaveTableDataComponent = ({ params, rowId }) => {
 	const [loading, setLoading] = useState(false);
 	const [success, setSucess] = useState(false);
 	const { handleDataUpdate } = useContext(DataContext);
 
+	//Fn to save/update the user action edits.
 	const handleSave = () => {
 		setLoading(true);
 		setTimeout(() => {
@@ -23,6 +29,51 @@ const SaveTableDataComponent = ({ params, rowId }) => {
 		}, 1000);
 	};
 
+	const renderSuccessButton = () => {
+		return (
+			<Fab
+				sx={{
+					width: 40,
+					height: 40,
+					bgcolor: green[500],
+					'&:hover': { bgcolor: green[700] },
+				}}
+			>
+				<Check />
+			</Fab>
+		);
+	};
+
+	const renderSaveButton = () => {
+		return (
+			<Fab
+				sx={{
+					width: 40,
+					height: 40,
+				}}
+				disabled={params.id !== rowId || loading}
+				onClick={handleSave}
+			>
+				<SaveAs />
+			</Fab>
+		);
+	};
+
+	const renderLoadingButton = () => {
+		return (
+			<CircularProgress
+				size={52}
+				sx={{
+					color: green[500],
+					position: 'absolute',
+					top: -6,
+					left: -6,
+					zIndex: 1,
+				}}
+			/>
+		);
+	};
+
 	return (
 		<Box
 			sx={{
@@ -30,41 +81,8 @@ const SaveTableDataComponent = ({ params, rowId }) => {
 				position: 'relative',
 			}}
 		>
-			{success ? (
-				<Fab
-					sx={{
-						width: 40,
-						height: 40,
-						bgcolor: green[500],
-						'&:hover': { bgcolor: green[700] },
-					}}
-				>
-					<Check />
-				</Fab>
-			) : (
-				<Fab
-					sx={{
-						width: 40,
-						height: 40,
-					}}
-					disabled={params.id !== rowId || loading}
-					onClick={handleSave}
-				>
-					<SaveAs />
-				</Fab>
-			)}
-			{loading && (
-				<CircularProgress
-					size={52}
-					sx={{
-						color: green[500],
-						position: 'absolute',
-						top: -6,
-						left: -6,
-						zIndex: 1,
-					}}
-				/>
-			)}
+			{success ? renderSuccessButton() : renderSaveButton()}
+			{loading && renderLoadingButton()}
 		</Box>
 	);
 };

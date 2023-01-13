@@ -14,6 +14,7 @@ import { DataContext } from '../../hooks/Context/DataContext';
  */
 const TableComponent = ({ rowId, handleRowChange }) => {
 	const { data } = useContext(DataContext);
+
 	/**
 	 * @returns Table rows data
 	 */
@@ -123,36 +124,45 @@ const TableComponent = ({ rowId, handleRowChange }) => {
 		writeFileXLSX(wb, 'SheetJSReact.xlsx');
 	}, [rows]);
 
+	const renderDataGrid = () => {
+		return (
+			<DataGrid
+				rows={rows}
+				columns={columns}
+				pageSize={rowPerPage}
+				rowsPerPageOptions={[rowPerPage]}
+				onCellEditCommit={(params) => handleRowChange(params.id)}
+			/>
+		);
+	};
+
+	const renderExportButton = () => {
+		return (
+			<Button
+				sx={{ m: 'auto' }}
+				variant='contained'
+				onClick={handleExport}
+			>
+				Export to Excel
+			</Button>
+		);
+	};
+
 	if (!data.length) return <h1 style={{ margin: 'auto' }}>Loading....</h1>;
 
 	return (
-		<>
-			<div
-				style={{
-					height: 400,
-					width: '90%',
-					display: 'flex',
-					flexDirection: 'column',
-					margin: 'auto',
-				}}
-			>
-				<DataGrid
-					rows={rows}
-					columns={columns}
-					pageSize={rowPerPage}
-					rowsPerPageOptions={[rowPerPage]}
-					checkboxSelection
-					onCellEditCommit={(params) => handleRowChange(params.id)}
-				/>
-				<Button
-					sx={{ m: 'auto' }}
-					variant='contained'
-					onClick={handleExport}
-				>
-					Export to Excel
-				</Button>
-			</div>
-		</>
+		<div
+			style={{
+				height: 400,
+				width: '90%',
+				display: 'flex',
+				flexDirection: 'column',
+				margin: 'auto',
+			}}
+		>
+			{renderDataGrid()}
+			{renderExportButton()}
+		</div>
 	);
 };
 
